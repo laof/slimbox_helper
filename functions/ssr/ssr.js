@@ -35,7 +35,7 @@ async function getssr() {
 
   try {
     await page.goto(org);
-    // await page.waitForSelector('.ssr-btn-bar button');
+    await page.waitForSelector('.ssr-btn-bar button');
   } catch (err) {
     try {
       await browser.close();
@@ -47,7 +47,7 @@ async function getssr() {
   try {
     const txt = await page.evaluate(async () => {
       document.querySelector('.ssr-btn-bar button').click();
-      return await navigator.clipboard.readText();
+      return navigator.clipboard.readText().then((res) => res);
     });
     data = [txt];
   } catch (e) {
