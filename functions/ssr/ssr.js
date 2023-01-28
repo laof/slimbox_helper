@@ -24,17 +24,17 @@ async function createBrowserContext() {
     ignoreHTTPSErrors: true,
   });
 
-  const context = browser.defaultBrowserContext();
-  context.overridePermissions(org, ['clipboard-read']);
+  const context = await browser.defaultBrowserContext();
+  context.overridePermissions(org, ['clipboard-read', 'clipboard-write']);
 
   const page = await browser.newPage();
 
-  return { browser, page };
+  return { browser, context, page };
 }
 
 async function getssr() {
   let data = [];
-  const { page, browser } = await createBrowserContext();
+  const { page, browser, context } = await createBrowserContext();
 
   //   try {
   //     await page.goto(org);
@@ -49,19 +49,22 @@ async function getssr() {
 
   try {
     await page.goto(org);
+    await page.waitForSelector('.ssr-btn-bar button');
     const txt = await page.evaluate(async () => {
       const btn = document.querySelector('.ssr-btn-bar button');
 
       if (btn) {
         btn.click();
+        return navigator.clipboard.readText().then((res) => res);
       }
 
-      return navigator.clipboard.readText().then((res) => res);
+      return Promise.resolve('errrrr');
     });
     data = [txt];
   } catch (e) {
     data = [e.toString(), 'err'];
   }
+  context.clearPermissionOverrides();
   await browser.close();
   return data;
 }
