@@ -40,7 +40,7 @@ async function getssr() {
     });
     data = [txt];
   } catch (e) {
-    data = [e, 'err'];
+    data = [e.toString(), 'err'];
   }
   await browser.close();
   return data;
