@@ -33,8 +33,7 @@ async function createBrowserContext() {
 }
 
 async function getssr() {
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
+  const { browser, page } = createBrowserContext();
 
   await page.goto('https://lncn.org/api/ssr-list');
 
