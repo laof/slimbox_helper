@@ -1,0 +1,9 @@
+[build]
+	publish = "public/"
+	functions = "functions/"
+
+
+[[headers]]
+	for = "/*"
+	[headers.values]
+		Access-Control-Allow-Origin = "https://laof.github.io"
