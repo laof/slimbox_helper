@@ -55,7 +55,7 @@ async function getssr() {
 
       if (btn) {
         btn.click();
-        return navigator.clipboard.readText().then((res) => res);
+        return navigator.clipboard.readText();
       }
 
       return Promise.resolve('errrrr');
