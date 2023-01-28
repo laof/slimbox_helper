@@ -49,7 +49,7 @@ async function getssr() {
 
   try {
     await page.goto(org);
-    await page.waitForSelector('.ssr-btn-bar button');
+    // await page.waitForSelector('.ssr-btn-bar button');
     const txt = await page.evaluate(async () => {
       const btn = document.querySelector('.ssr-btn-bar button');
 
@@ -64,7 +64,7 @@ async function getssr() {
   } catch (e) {
     data = [e.toString(), 'err'];
   }
-  context.clearPermissionOverrides();
+  await context.clearPermissionOverrides();
   await browser.close();
   return data;
 }
