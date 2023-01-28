@@ -35,7 +35,7 @@ async function getssr() {
 
   try {
     await page.goto(org);
-    await page.waitForSelector('.ssr-btn-bar button');
+    // await page.waitForSelector('.ssr-btn-bar button');
   } catch (err) {
     try {
       await browser.close();
