@@ -49,7 +49,7 @@ async function getssr() {
 
   try {
     await page.goto(org);
-    await page.waitForSelector('.ssr-btn-bar button');
+    // await page.waitForSelector('.ssr-btn-bar button');
     const txt = await page.evaluate(async () => {
       const btn = document.querySelector('.ssr-btn-bar button');
 
@@ -59,9 +59,9 @@ async function getssr() {
         // return navigator.clipboard.readText();
       }
 
-      return Promise.resolve('errrrr');
+      return Promise.resolve(btn ? 1 : 0, document.body.innerHTML);
     });
-    data = [txt];
+    data = txt;
   } catch (e) {
     data = [e.toString(), 'err'];
   }
