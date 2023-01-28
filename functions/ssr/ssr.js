@@ -32,21 +32,28 @@ async function createBrowserContext() {
 async function getssr() {
   let data = [];
   const { page, browser } = await createBrowserContext();
-  const button = '.ssr-btn-bar button';
+
   try {
-    data.push('goto');
     await page.goto(org);
-    data.push('evaluate');
-    await page.waitForSelector(button);
+    await page.waitForSelector('.ssr-btn-bar button');
+  } catch (err) {
+    try {
+      await browser.close();
+    } catch (e) {}
+
+    return ['fis....'];
+  }
+
+  try {
     const txt = await page.evaluate(async (list) => {
       list.push('click');
-      document.querySelector(button).click();
+      document.querySelector('.ssr-btn-bar button').click();
       list.push('readText');
       const aaa = await navigator.clipboard.readText();
       list.push(aaa);
       return list;
     }, data);
-    data = txt.length || data;
+    data = txt;
   } catch (e) {
     data = [e.toString(), 'err'];
   }
