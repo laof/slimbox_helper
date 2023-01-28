@@ -1,15 +1,13 @@
 const puppeteer = require('puppeteer-core');
 const chromium = require('@sparticuz/chromium');
 
-const org = 'https://lncn.org';
+const org = 'https://ln' + 'cn.org';
 
 exports.handler = async (event, context) => {
-  // 进行解码
-  const bs = await getssr();
-
+  const list = await getssr();
   return {
     statusCode: 200,
-    body: JSON.stringify(bs),
+    body: JSON.stringify(list),
   };
 };
 
@@ -38,10 +36,12 @@ async function getssr() {
     await page.goto(org);
     const txt = await page.evaluate(async () => {
       document.querySelector('.ssr-btn-bar button').click();
-      return navigator.clipboard.readText().then((txt) => txt);
+      return navigator.clipboard.readText();
     });
-    data = txt.split('\n');
-  } catch (e) {}
+    data = [txt];
+  } catch (e) {
+    data = [e, 'err'];
+  }
   await browser.close();
   return data;
 }
