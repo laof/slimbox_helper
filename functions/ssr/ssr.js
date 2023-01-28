@@ -24,8 +24,8 @@ async function createBrowserContext() {
     ignoreHTTPSErrors: true,
   });
 
-  const context = await browser.defaultBrowserContext();
-  context.overridePermissions(org, ['clipboard-read', 'clipboard-write']);
+  // const context = await browser.defaultBrowserContext();
+  // context.overridePermissions(org, ['clipboard-read', 'clipboard-write']);
 
   const page = await browser.newPage();
 
@@ -48,16 +48,16 @@ async function getssr() {
   //   }
 
   try {
-    await page.goto(org);
+    await page.goto('https://lncn.org/api/ssr-list');
     // await page.waitForSelector('.ssr-btn-bar button');
     const txt = await page.evaluate(async () => {
-      const btn = document.querySelector('.ssr-btn-bar button');
+      // const btn = document.querySelector('.ssr-btn-bar button');
 
-      if (btn) {
-        btn.click();
-        return Promise.resolve('try?');
-        // return navigator.clipboard.readText();d
-      }
+      // if (btn) {
+      //   btn.click();
+      //   return Promise.resolve('try?');
+      //   // return navigator.clipboard.readText();d
+      // }
 
       return Promise.resolve([document.body.innerHTML]);
     });
@@ -65,7 +65,7 @@ async function getssr() {
   } catch (e) {
     data = [e.toString(), 'err'];
   }
-  await context.clearPermissionOverrides();
+  // await context.clearPermissionOverrides();
   await browser.close();
   return data;
 }
