@@ -33,12 +33,18 @@ async function getssr() {
   let data = [];
   const { page, browser } = await createBrowserContext();
   try {
+    data.push('goto');
     await page.goto(org);
-    const txt = await page.evaluate(async () => {
+    data.push('evaluate');
+    const txt = await page.evaluate(async (list) => {
+      list.push('click');
       document.querySelector('.ssr-btn-bar button').click();
-      return await navigator.clipboard.readText();
-    });
-    data = [txt];
+      list.push('readText');
+      const aaa = await navigator.clipboard.readText();
+      list.push(aaa);
+      return list;
+    }, data);
+    data = txt.length || data;
   } catch (e) {
     data = [e.toString(), 'err'];
   }
