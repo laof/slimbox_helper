@@ -53,7 +53,6 @@ async function getdata() {
   const list = [];
   try {
     const str = await getssr();
-    console.log(str);
     if (!str) {
       return [];
     }
@@ -77,4 +76,4 @@ async function test() {
   console.log(list);
 }
 
-test();
+// test();
