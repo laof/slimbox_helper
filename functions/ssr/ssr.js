@@ -7,6 +7,9 @@ exports.handler = async (event, context) => {
   const list = await getssr();
   return {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     body: JSON.stringify(list),
   };
 };
@@ -33,20 +36,26 @@ async function getssr() {
   let data = [];
   const { page, browser } = await createBrowserContext();
 
+  //   try {
+  //     await page.goto(org);
+  //     await page.waitForSelector('.ssr-btn-bar button');
+  //   } catch (err) {
+  //     try {
+  //       await browser.close();
+  //     } catch (e) {}
+
+  //     return ['fis....'];
+  //   }
+
   try {
     await page.goto(org);
-    await page.waitForSelector('.ssr-btn-bar button');
-  } catch (err) {
-    try {
-      await browser.close();
-    } catch (e) {}
-
-    return ['fis....'];
-  }
-
-  try {
     const txt = await page.evaluate(async () => {
-      document.querySelector('.ssr-btn-bar button').click();
+      const btn = document.querySelector('.ssr-btn-bar button');
+
+      if (btn) {
+        btn.click();
+      }
+
       return navigator.clipboard.readText().then((res) => res);
     });
     data = [txt];
