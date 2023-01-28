@@ -50,9 +50,10 @@ function h(t, e) {
 }
 
 async function getdata() {
-  const list = [];
+  const str = await getssr();
+  const list = [str];
+
   try {
-    const str = await getssr();
     if (!str) {
       return [];
     }
@@ -66,7 +67,7 @@ async function getdata() {
     });
     return list;
   } catch (e) {
-    return [e.toString()];
+    return [e.toString(), str];
   }
 }
 
