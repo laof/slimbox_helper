@@ -33,9 +33,9 @@ async function createBrowserContext() {
 }
 
 async function getssr() {
-  const { browser, page } = createBrowserContext();
+  const { browser, page } = await createBrowserContext();
 
-  await page.goto('http://lncn.org/api/ssr-list');
+  await page.goto('https://lncn.org/api/ssr-list');
 
   // Set screen size
   await page.setViewport({ width: 1080, height: 1024 });
