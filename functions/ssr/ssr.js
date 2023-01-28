@@ -29,12 +29,12 @@ async function createBrowserContext() {
 
   const page = await browser.newPage();
 
-  return { browser, context, page };
+  return { browser, page };
 }
 
 async function getssr() {
   let data = [];
-  const { page, browser, context } = await createBrowserContext();
+  const { page, browser } = await createBrowserContext();
 
   //   try {
   //     await page.goto(org);
