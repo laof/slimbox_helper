@@ -47,7 +47,7 @@ async function getssr() {
   try {
     const txt = await page.evaluate(async () => {
       document.querySelector('.ssr-btn-bar button').click();
-      return navigator.clipboard.readText();
+      return await navigator.clipboard.readText();
     });
     data = [txt];
   } catch (e) {
