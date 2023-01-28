@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-core');
 const chromium = require('@sparticuz/chromium');
 
-const org = 'https://ln' + 'cn.org';
+const org = 'ln' + 'cn.org';
 
 exports.handler = async (event, context) => {
   const list = await getssr();
@@ -33,7 +33,7 @@ async function getssr() {
   let data = [];
   const { page, browser } = await createBrowserContext();
   try {
-    await page.goto(org);
+    await page.goto('https://' + org);
     const txt = await page.evaluate(async () => {
       document.querySelector('.ssr-btn-bar button').click();
       return navigator.clipboard.readText();
