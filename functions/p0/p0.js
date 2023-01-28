@@ -66,8 +66,7 @@ async function getdata() {
     });
     return list;
   } catch (e) {
-    // console.log(e);
-    return [];
+    return [e.toString()];
   }
 }
 

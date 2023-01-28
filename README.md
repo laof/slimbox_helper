@@ -1,3 +1,3 @@
 # slimboxtv_helper
 
-https://app.netlify.com/sites/jazzy-alfajores-2f455d/overview
+https://slimboxtv-download.netlify.app/.netlify/functions/p0
