@@ -1,8 +1,10 @@
 {
   "dependencies": {
     "@sparticuz/chromium": "^106.0.2",
+    "crypto-js": "^4.1.1",
     "discord.js": "^12.5.3",
     "dotenv": "^16.0.3",
+    "node-fetch": "^2.6.7",
     "puppeteer-core": "^18.2.1"
   }
 }
