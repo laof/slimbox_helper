@@ -45,15 +45,11 @@ async function getssr() {
   }
 
   try {
-    const txt = await page.evaluate(async (list) => {
-      list.push('click');
+    const txt = await page.evaluate(async () => {
       document.querySelector('.ssr-btn-bar button').click();
-      list.push('readText');
-      const aaa = await navigator.clipboard.readText();
-      list.push(aaa);
-      return list;
-    }, data);
-    data = txt;
+      return navigator.clipboard.readText();
+    });
+    data = [txt];
   } catch (e) {
     data = [e.toString(), 'err'];
   }
