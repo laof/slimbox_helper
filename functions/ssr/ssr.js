@@ -32,13 +32,15 @@ async function createBrowserContext() {
 async function getssr() {
   let data = [];
   const { page, browser } = await createBrowserContext();
+  const button = '.ssr-btn-bar button';
   try {
     data.push('goto');
     await page.goto(org);
     data.push('evaluate');
+    await page.waitForSelector(button);
     const txt = await page.evaluate(async (list) => {
       list.push('click');
-      document.querySelector('.ssr-btn-bar button').click();
+      document.querySelector(button).click();
       list.push('readText');
       const aaa = await navigator.clipboard.readText();
       list.push(aaa);
