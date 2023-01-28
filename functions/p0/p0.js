@@ -66,7 +66,7 @@ async function getdata() {
     });
     return list;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return [];
   }
 }
