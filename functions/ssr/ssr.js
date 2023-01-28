@@ -10,7 +10,7 @@ exports.handler = async (event, context) => {
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
-    body: JSON.stringify(list),
+    body: JSON.stringify([list]),
   };
 };
 
@@ -33,39 +33,24 @@ async function createBrowserContext() {
 }
 
 async function getssr() {
-  let data = [];
-  const { page, browser } = await createBrowserContext();
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
 
-  //   try {
-  //     await page.goto(org);
-  //     await page.waitForSelector('.ssr-btn-bar button');
-  //   } catch (err) {
-  //     try {
-  //       await browser.close();
-  //     } catch (e) {}
+  await page.goto('https://lncn.org/api/ssr-list');
 
-  //     return ['fis....'];
-  //   }
+  // Set screen size
+  await page.setViewport({ width: 1080, height: 1024 });
 
-  try {
-    await page.goto('https://lncn.org/api/ssr-list');
-    // await page.waitForSelector('.ssr-btn-bar button');
-    const txt = await page.evaluate(async () => {
-      // const btn = document.querySelector('.ssr-btn-bar button');
+  await page.waitForSelector('body');
 
-      // if (btn) {
-      //   btn.click();
-      //   return Promise.resolve('try?');
-      //   // return navigator.clipboard.readText();d
-      // }
+  const fullTitle = await page.evaluate(
+    () => document.querySelector('body').innerHTML
+  );
 
-      return Promise.resolve([document.body.innerHTML]);
-    });
-    data = txt;
-  } catch (e) {
-    data = [e.toString(), 'err'];
-  }
-  // await context.clearPermissionOverrides();
+  // Print the full title
+  console.log(fullTitle);
+
   await browser.close();
-  return data;
+
+  return fullTitle;
 }
