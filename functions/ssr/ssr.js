@@ -10,7 +10,7 @@ exports.handler = async (event, context) => {
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
-    body: JSON.stringify([list]),
+    body: JSON.stringify([]),
   };
 };
 
@@ -35,7 +35,7 @@ async function createBrowserContext() {
 async function getssr() {
   const { browser, page } = await createBrowserContext();
 
-  await page.goto('https://lncn.org/api/ssr-list');
+  await page.goto(org + '/api/ssr-list');
 
   // Set screen size
   await page.setViewport({ width: 1080, height: 1024 });
