@@ -56,10 +56,10 @@ async function getssr() {
       if (btn) {
         btn.click();
         return Promise.resolve('try?');
-        // return navigator.clipboard.readText();
+        // return navigator.clipboard.readText();d
       }
 
-      return Promise.resolve(btn ? 1 : 0, document.body.innerHTML);
+      return Promise.resolve([document.body.innerHTML]);
     });
     data = txt;
   } catch (e) {
